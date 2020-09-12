@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button>获取位置</button>
+    <script>
+        var btn=document.getElementsByTagName("button")[0];
+        btn.onclick=function(){
+            // console.log(navigator.geolocation)
+          navigator.geolocation.getCurrentPosition(function(res){
+              //res参数是一个对象，该对象是获取成功后的所有的信息，比如经纬度，海拔，行进方向等等
+              console.log(res)
+          },function(err){
+            // 如果位置获取失败，则会执行该函数，err表示的就是执行失败后返回的那个对象，可以通过该对象得到具体的失败原因
+              console.log(err);
+          },{
+              
+          });  
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 1,导入百度地图API，JS文件 -->
+    <script src="https://api.map.baidu.com/api?v=2.0&ak=YhgdX9V4DTAIepL8XHcMFkVYEvd4zzkv"></script>
+</head>
+<body>
+    您当前的位置在：
+    <div id="box">
+        <!-- 湖南长沙 -->
+
+    </div>
+    <script>
+    //该对象是百度地图生成的地理定位对象，与原生的不一样
+     var geolocation = new BMap.Geolocation();
+     // 返回百度地图地理定位对象
+     console.dir(geolocation);
+     geolocation.getCurrentPosition(function (res) {
+        //如果获取成功，
+         if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+             console.log(res);
+             //将用户的位置打印或显示
+             document.getElementById("box").innerText=res.address.city;
+             /*
+                var res={
+                    accuracy: 1999
+                    address: {
+                        city: "香港", 
+                        city_code: 0, 
+                        district: "油尖旺区", 
+                        province: "香港", 
+                        street: "弥敦道", …}
+                    altitude: null
+                    altitudeAccuracy: null
+                    heading: null
+                    latitude: 22.322230460245
+                    longitude: 114.1808934593
+                    point: H {lng: 114.1808934593, lat: 22.322230460245, of: "inner"}
+                    speed: null
+                    timestamp: null
+                }
+
+              */
+         }
+     }, {enableHighAccuracy: true,timeout:1500});
+   
+    </script>
+</body>
+</html>

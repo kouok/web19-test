@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    #show{
+        border: 1px solid red;
+        padding: 10px;
+    }
+    </style>
+</head>
+<body>
+    <button>获取位置</button>
+    <p>您的位置如下：</p>
+    <div id="show">
+        
+    </div>
+    <script>
+        var btn=document.getElementsByTagName("button")[0];
+        btn.onclick=function(){
+            // console.log(navigator.geolocation)
+          navigator.geolocation.getCurrentPosition(function(res){
+              //res参数是一个对象，该对象是获取成功后的所有的信息，比如经纬度，海拔，行进方向等等
+              console.log(res)
+              // 将位置信息输出到HTML中
+              var box=document.getElementById("show");
+              box.innerHTML+="经度是："+res.coords.longitude+"<br>";
+              box.innerHTML+="纬度是："+res.coords.latitude+"<br>";
+              box.innerHTML+="准确度是："+res.coords.accuracy+"<br>";
+              box.innerHTML+="海拔是："+res.coords.altitude+"<br>";
+              box.innerHTML+="海拔准确度是："+res.coords.altitudeAccuracy+"<br>";
+              box.innerHTML+="行进方向是："+res.coords.heading+"<br>";
+              box.innerHTML+="速度是："+res.coords.speed+"<br>";
+              box.innerHTML+="定位时间是："+new Date().toLocaleString(res.coords.timestamp)
+
+
+          },function(err){
+            // 如果位置获取失败，则会执行该函数，err表示的就是执行失败后返回的那个对象，可以通过该对象得到具体的失败原因
+              // console.log(err);
+              switch (err.code) {
+                  case 0:
+                      // statements_1
+                      alert("您一定是拒绝了位置服务，请你打开手机设置，允许定位服务。");
+                      break;
+                  case 1:
+                      alert("您主动拒绝了获取位置，请重试，并点击允许按钮");
+                      break;
+                  case 2:
+                      alert("我已经很努力获取你的位置，但是失败了，请再试一次呗");
+                      break;
+                 case 4:
+                      alert("获取超时，稍后再试");
+                      break;
+                 default:
+                      // statements_def
+                      alert("这是什么鬼");
+                      break;
+              }
+          },{
+              
+          });  
+        }
+    </script>
+</body>
+</html>

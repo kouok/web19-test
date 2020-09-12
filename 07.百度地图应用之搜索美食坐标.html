@@ -1,0 +1,49 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+        #allmap{width:100%;height:500px;}
+        p{margin-left:5px; font-size:14px;}
+    </style>
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=YhgdX9V4DTAIepL8XHcMFkVYEvd4zzkv"></script>
+    <title>根据关键字本地搜索</title>
+</head>
+<body>
+    <input  id="ipt" type="text" placeholder="请输入您要查找的地点、美食、坐标等">
+    <button id="btn">查询</button>
+    <div id="allmap"></div>
+    <p>返回北京市“景点”关键字的检索结果，并展示在地图上</p>
+</body>
+</html>
+<script type="text/javascript">
+    var btn=document.getElementById("btn");
+    var ipt=document.getElementById("ipt");
+    btn.onclick=function(){
+
+
+    // 要获取用户经纬度
+    navigator.geolocation.getCurrentPosition(function(res){
+    //res参数是一个对象，该对象是获取成功后的所有的信息，比如经纬度，海拔，行进方向等等
+        // 将百度地图的代码包裹在这里
+        // 百度地图API功能
+        var map = new BMap.Map("allmap");  
+        //116.404, 39.915        
+        map.centerAndZoom(new BMap.Point(res.coords.longitude, res.coords.latitude), 11);
+        var local = new BMap.LocalSearch(map, {
+            renderOptions:{map: map}
+        });
+        // "景点"
+        local.search(ipt.value);
+
+    },function(err){
+        //err返回的是获取位置失败后的对象，通过该对象可以知道具体的错误原因
+    },{
+        
+    });
+
+
+    }
+    
+</script>
